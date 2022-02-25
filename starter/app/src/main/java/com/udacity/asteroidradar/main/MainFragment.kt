@@ -22,13 +22,13 @@ class MainFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        val adapter = AsteroidAdapter(AsteroidClickListener {
+        setHasOptionsMenu(true)
+
+        val adapter = AsteroidListAdapter(AsteroidClickListener {
             view?.findNavController()?.navigate(MainFragmentDirections.actionShowDetail(it))
         })
 
         binding.asteroidRecycler.adapter = adapter
-
-        setHasOptionsMenu(true)
 
         viewModel.asteroids.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it) {
