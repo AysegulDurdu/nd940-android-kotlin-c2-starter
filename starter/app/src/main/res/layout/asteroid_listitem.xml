@@ -4,8 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.udacity.asteroidradar.Asteroid"/>
-        <import type="com.udacity.asteroidradar.main.AsteroidClickListener"/>
 
         <variable
             name="asteroid"
@@ -28,6 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
             android:text="@{asteroid.codename}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -40,6 +40,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
             android:text="@{asteroid.closeApproachDate}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

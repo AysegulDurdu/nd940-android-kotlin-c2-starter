@@ -31,7 +31,7 @@ fun List<AsteroidEntitiyTable>.asDomainModel(): List<Asteroid> {
     }
 }
 
-fun List<Asteroid>.asDatabaseModel(): List<AsteroidEntitiyTable> {
+fun List<Asteroid>.asDatabaseModel(): Array<AsteroidEntitiyTable> {
     return map {
         AsteroidEntitiyTable(
             id = it.id,
@@ -43,5 +43,5 @@ fun List<Asteroid>.asDatabaseModel(): List<AsteroidEntitiyTable> {
             distanceFromEarth = it.distanceFromEarth,
             isPotentiallyHazardous = it.isPotentiallyHazardous
         )
-    }
+    }.toTypedArray()
 }

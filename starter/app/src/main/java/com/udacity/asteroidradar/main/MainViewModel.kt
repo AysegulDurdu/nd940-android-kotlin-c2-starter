@@ -10,6 +10,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val database = AsteroidDatabase.getDatabase(application)
     val repo = AsteroidRepo(database)
+    val pictureOfDay = repo.pictureOfDay
 
     init {
         refreshAsteroidService()

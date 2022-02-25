@@ -1,6 +1,8 @@
 package com.udacity.asteroidradar
 
+import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.squareup.picasso.Picasso
@@ -47,5 +49,14 @@ fun ImageView.loadImageIntoView(picture: PictureOfDay?) {
             Picasso.with(this.context).load(pictureOfDay.url).into(this)
         }
         contentDescription = pictureOfDay.title
+    }
+}
+@BindingAdapter("networkStatus")
+fun visibilityOfLoadingBar(progressBar: ProgressBar, asteroids: List<Asteroid>?) {
+
+    if (asteroids.isNullOrEmpty()) {
+        progressBar.visibility = View.VISIBLE
+    } else {
+        progressBar.visibility = View.GONE
     }
 }

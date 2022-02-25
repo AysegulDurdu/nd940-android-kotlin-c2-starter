@@ -1,11 +1,10 @@
 package com.udacity.asteroidradar.repository
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.udacity.asteroidradar.Asteroid
 import com.udacity.asteroidradar.Constants
 import com.udacity.asteroidradar.PictureOfDay
-import com.udacity.asteroidradar.api.AsteroidApi
 import com.udacity.asteroidradar.api.AsteroidApi.RETROFIT_SERVICE
 import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.database.AsteroidDatabase
@@ -19,7 +18,9 @@ import java.util.*
 
 class AsteroidRepo(val database: AsteroidDatabase) {
 
-    private val pictureOfDay = MutableLiveData<PictureOfDay>()
+    private val _pictureOfDay = MutableLiveData<PictureOfDay>()
+    val pictureOfDay: LiveData<PictureOfDay>
+        get() = _pictureOfDay
 
     val yesterdayFormat = getDayDates(-1)
     val todayFormat = getDayDates(0)
@@ -43,28 +44,25 @@ class AsteroidRepo(val database: AsteroidDatabase) {
             database.asteroidDao.deleteAsteroidWithDate(yesterdayFormat)
         }
     }
+
     suspend fun refreshAsteroidService() {
-        withContext(Dispatchers.IO) {
-            try {
-                val str = RETROFIT_SERVICE.getAstreoids(getDayDates())
-                val jsonObject = JSONObject(str)
-                val asteroidList: ArrayList<Asteroid> = parseAsteroidsJsonResult(jsonObject)
-                val list = asteroidList.asDatabaseModel()
-                list.forEach {
-                    database.asteroidDao.insertAll(it)
-                }
-            } catch (e: java.lang.Exception) {
-               e.printStackTrace()
+        try {
+            withContext(Dispatchers.IO) {
+                val asteroid = parseAsteroidsJsonResult(JSONObject(RETROFIT_SERVICE.getAstreoids()))
+                database.asteroidDao.insertAll(*asteroid.asDatabaseModel())
             }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
     suspend fun refreshPictureOfDay() {
         withContext(Dispatchers.IO) {
             try {
-                pictureOfDay.postValue(RETROFIT_SERVICE.getPictureOfDay())
+                _pictureOfDay.postValue(RETROFIT_SERVICE.getPictureOfDay())
             } catch (e: Exception) {
-               e.printStackTrace()
+                e.printStackTrace()
             }
         }
     }
