@@ -57,6 +57,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_status_potentially_hazardous"
+            android:contentDescription="@{`Image of asteroid with codename ` + asteroid.codename}"
             app:statusIcon="@{asteroid.isPotentiallyHazardous}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
