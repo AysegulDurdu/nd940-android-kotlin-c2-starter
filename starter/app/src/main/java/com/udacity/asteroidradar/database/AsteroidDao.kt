@@ -14,7 +14,7 @@ interface AsteroidDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg asteroidEntitiyTable: AsteroidEntitiyTable)
 
-    @Query("select * from AsteroidEntitiyTable where closeApproachDate between :endDate and :startDate order by closeApproachDate")
+    @Query("select * from AsteroidEntitiyTable where closeApproachDate between :startDate and :endDate order by closeApproachDate")
     fun getByFilterDate(startDate: String, endDate: String): LiveData<List<AsteroidEntitiyTable>>
 
     @Query("SELECT * FROM AsteroidEntitiyTable WHERE closeApproachDate = :startDate order by closeApproachDate")

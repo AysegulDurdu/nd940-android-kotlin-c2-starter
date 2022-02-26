@@ -7,6 +7,7 @@ import com.udacity.asteroidradar.Constants.BASE_URL
 import com.udacity.asteroidradar.PictureOfDay
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -16,6 +17,7 @@ private val moshi = Moshi.Builder()
 
 private val retrofit = Retrofit
     .Builder()
+    .addConverterFactory(ScalarsConverterFactory.create())
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(BASE_URL)
     .build()
